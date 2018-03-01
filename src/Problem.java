@@ -39,11 +39,10 @@ class Car {
      int yPosition;
      ArrayList<Integer> rides = new ArrayList<>();
 
-     public Car(int x, int y) {
-
-         this.xPosition = x;
-         this.yPosition = y;
-
+     public Car() {
+         this.xPosition = 0;
+         this.yPosition = 0;
+         this.finishTime = 0;
      }
 
 
@@ -71,6 +70,7 @@ public class Problem {
     int N; //number of rides
     int B; //Bonus
     int T; //number of steps
+    Car[] cars;
 
     void readInput() {
         R = scan.nextInt();
@@ -81,6 +81,10 @@ public class Problem {
         T = scan.nextInt();
         ridesQueue = new PriorityQueue<>(N, ride_comparator);
 
+        for (int i = 0; i < F; i++) {
+            freeCars.add(new Car());
+        }
+
         for (int i = 0; i < N; i++) {
             ridesQueue.add(new Ride(scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), i));
         }
@@ -89,10 +93,11 @@ public class Problem {
     void choosingRides() {
         for (Ride rides: ridesQueue) {
             Car carUsed = null;
-            carUsed.finishTime = rides.finish_time;
-            carUsed.xPosition = rides.endX;
-            carUsed.yPosition = rides.endY;
-            carUsed.rides.add(rides.id);
+            if(carUsed != null) {
+                carUsed.xPosition = rides.endX;
+                carUsed.yPosition = rides.endY;
+                carUsed.rides.add(rides.id);
+            }
         }
     }
 
