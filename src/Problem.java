@@ -1,5 +1,27 @@
 import java.util.Scanner;
 
+ class Ride {
+    int startX;
+    int startY;
+    int endX;
+    int endY;
+    int start_time;
+    int finish_time;
+    int time_needed;
+
+    public Ride(int sX, int sY, int eX, int eY, int start, int finish) {
+        this.startX = sX;
+        this.startY = sY;
+        this.endX = eX;
+        this.endY = eY;
+        this.start_time = start;
+        this.finish_time = finish;
+        time_needed = Math.abs(sX - eX) + Math.abs(sY - eY);
+
+    }
+
+}
+
 public class Problem {
     Scanner scan = new Scanner(System.in);
 
