@@ -94,11 +94,13 @@ public class Problem {
 
     void choosingRides() {
         for (Ride rides: ridesQueue) {
-            Car carUsed = null;
+            Car carUsed = findClosestCar(rides);
             if(carUsed != null) {
                 carUsed.xPosition = rides.endX;
                 carUsed.yPosition = rides.endY;
                 carUsed.rides.add(rides.id);
+                freeCars.remove(carUsed);
+                usedCars.add(carUsed);
             }
         }
     }
