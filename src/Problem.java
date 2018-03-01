@@ -34,16 +34,16 @@ import java.util.ArrayList;
 
 class Car {
 
-     private int finishTime;
-     private int xPosition;
-     private int yPosition;
-     ArrayList<Integer> rides = new ArrayList<>();
+    int finishTime;
+    int xPosition;
+    int yPosition;
+    ArrayList<Integer> rides = new ArrayList<>();
 
-     public Car() {
-         this.xPosition = 0;
-         this.yPosition = 0;
-         this.finishTime = 0;
-     }
+    public Car() {
+        this.xPosition = 0;
+        this.yPosition = 0;
+        this.finishTime = 0;
+    }
 
 
     public void setxPosition(int xPosition) {
@@ -56,8 +56,9 @@ class Car {
 
     public Integer getFinishTime() {
 
-       return finishTime;
+        return finishTime;
     }
+}
 
 
     class RideComparator implements Comparator<Ride> {
@@ -119,7 +120,7 @@ public class Problem {
            }
 
        }
-    }
+
 
     void choosingRides() {
         for (Ride rides: ridesQueue) {
