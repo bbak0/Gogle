@@ -142,9 +142,15 @@ public class Problem {
         }
         return null;
     }
+    
 
     void run() {
         readInput();
+        choosingRides();
+    }
+
+    public static void main(String [ ] args) {
+        new Problem.run();
     }
 }
 
