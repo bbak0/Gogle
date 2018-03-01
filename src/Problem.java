@@ -63,6 +63,25 @@ class Car {
     }
 }
 
+class CarDist {
+     int distance;
+     Car c;
+     public CarDist(int d, Car c){
+         this.distance = d;
+         this.c = c;
+
+     }
+     public Integer getDist(){
+         return distance;
+     }
+}
+
+    class CarDistComparator implements Comparator<CarDist> {
+
+        public int compare(CarDist a, CarDist b){
+            return a.getDist().compareTo(b.getDist());
+        }
+    }
 
     class RideComparator implements Comparator<Ride> {
 
