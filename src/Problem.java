@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.PriorityQueue;
@@ -81,6 +84,7 @@ public class Problem {
     RideComparator ride_comparator = new RideComparator();
     CarComparatorByFinishTime car_comparator = new CarComparatorByFinishTime();
     PriorityQueue<Ride> ridesQueue;
+    PrintWriter writer;
 
     ArrayList<Car> freeCars = new ArrayList<Car>(1000);
     PriorityQueue<Car> usedCars = new PriorityQueue<Car>(1000, car_comparator);
@@ -94,6 +98,14 @@ public class Problem {
     int currentT = 0;
 
     void readInput() {
+        System.out.println("Input filename:");
+        try {
+            writer = new PrintWriter(scan.next(),"UTF-8");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         R = scan.nextInt();
         C = scan.nextInt();
         F = scan.nextInt();
@@ -173,6 +185,27 @@ public class Problem {
         return null;
     }
 
+    void writeAnswer(){
+        for (Car c : freeCars) {
+            int n = c.rides.size();
+            writer.print(n + " ");
+            for (int i = 0; i < n; i++) {
+                writer.print(c.rides.get(i) + " ");
+            }
+            writer.println();
+        }
+        for (Car c : usedCars) {
+            int n = c.rides.size();
+            writer.print(n + " ");
+            for (int i = 0; i < n; i++) {
+                writer.print(c.rides.get(i) + " ");
+            }
+            writer.println();
+        }
+        writer.close();
+
+    }
+
     void printAnswer() {
         for (Car c : freeCars) {
             int n = c.rides.size();
@@ -195,7 +228,7 @@ public class Problem {
     void run() {
         readInput();
         choosingRides();
-        printAnswer();
+        writeAnswer();
     }
 
     public static void main(String [ ] args) {
