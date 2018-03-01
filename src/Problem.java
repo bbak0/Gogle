@@ -72,8 +72,6 @@ public class Problem {
     int T; //number of steps
     int currentT = 0;
 
-    Car[] cars;
-
     void readInput() {
         R = scan.nextInt();
         C = scan.nextInt();
@@ -165,6 +163,7 @@ public class Problem {
     void run() {
         readInput();
         choosingRides();
+        printAnswer();
     }
 
     public static void main(String [ ] args) {
