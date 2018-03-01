@@ -112,11 +112,8 @@ public class Problem {
     }
 
     void placeFreeCars(int T) {
-
         if (usedCars.peek().finishTime <= T) {
-
                 freeCars.add(usedCars.poll());
-
            }
 
        }
@@ -124,6 +121,7 @@ public class Problem {
 
     void choosingRides() {
         for (Ride rides: ridesQueue) {
+            placeFreeCars(rides.start_time);
             Car carUsed = findClosestCarOPTIMIZED(rides);
             if(carUsed == null) {
                 carUsed = findClosestCar(rides);
@@ -161,7 +159,6 @@ public class Problem {
     }
 
     Car findClosestCarOPTIMIZED(Ride r){
-        int j;
         for (Car c : freeCars){
             int distanceRadius = r.start_time - c.finishTime;
             int dist = distance(c.xPosition, c.yPosition, r.startX, r.startY);
