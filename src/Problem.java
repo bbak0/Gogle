@@ -143,7 +143,24 @@ public class Problem {
         return null;
     }
 
-    
+    void printAnswer() {
+        for (Car c : freeCars) {
+            int n = c.rides.size();
+            System.out.print(n + " ");
+            for (int i = 0; i < n; i++) {
+                System.out.print(c.rides.get(i) + " ");
+            }
+            System.out.println();
+        }
+        for (Car c : usedCars) {
+            int n = c.rides.size();
+            System.out.print(n + " ");
+            for (int i = 0; i < n; i++) {
+                System.out.print(c.rides.get(i) + " ");
+            }
+            System.out.println();
+        }
+    }
 
     void run() {
         readInput();
@@ -151,7 +168,7 @@ public class Problem {
     }
 
     public static void main(String [ ] args) {
-        new Problem.run();
+        (new Problem()).run();
     }
 }
 
