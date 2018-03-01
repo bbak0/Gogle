@@ -30,13 +30,13 @@ import java.util.ArrayList;
 
     }
 
- }
+}
 
 class Car {
 
-     int finishTime;
-     int xPosition;
-     int yPosition;
+     private int finishTime;
+     private int xPosition;
+     private int yPosition;
      ArrayList<Integer> rides = new ArrayList<>();
 
      public Car() {
@@ -46,23 +46,43 @@ class Car {
      }
 
 
-}
+    public void setxPosition(int xPosition) {
+        this.xPosition = xPosition;
+    }
+
+    public void setyPosition(int yPosition) {
+        this.yPosition = yPosition;
+    }
+
+    public Integer getFinishTime() {
+
+       return finishTime;
+    }
 
 
-class RideComparator implements Comparator<Ride> {
+    class RideComparator implements Comparator<Ride> {
 
      public int compare(Ride a, Ride b) {
          return a.getStartTime().compareTo(b.getStartTime());
     }
 }
 
+    class CarComparatorByFinishTime implements  Comparator<Car> {
+
+        @Override
+        public int compare(Car car1, Car car2) {
+            return car1.getFinishTime().compareTo(car2.getFinishTime());
+        }
+    }
+
 public class Problem {
     Scanner scan = new Scanner(System.in);
     RideComparator ride_comparator = new RideComparator();
+    CarComparatorByFinishTime car_comparator = new CarComparatorByFinishTime();
     PriorityQueue<Ride> ridesQueue;
 
     ArrayList<Car> freeCars = new ArrayList<Car>(1000);
-    PriorityQueue<Car> usedCars = new PriorityQueue<Car>();
+    PriorityQueue<Car> usedCars = new PriorityQueue<Car>(1000, car_comparator);
 
     int R; //rows
     int C; //columns
@@ -88,6 +108,17 @@ public class Problem {
         for (int i = 0; i < N; i++) {
             ridesQueue.add(new Ride(scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), i));
         }
+    }
+
+    void placeFreeCars(int T) {
+
+        if (usedCars.peek().finishTime <= T) {
+
+                freeCars.add(usedCars.poll());
+
+           }
+
+       }
     }
 
     void choosingRides() {
