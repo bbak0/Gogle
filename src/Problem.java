@@ -1,4 +1,6 @@
+import java.util.PriorityQueue;
 import java.util.Scanner;
+import java.util.ArrayList;
 
  class Ride {
     int startX;
@@ -22,8 +24,28 @@ import java.util.Scanner;
 
 }
 
+class Car {
+
+     int finishTime;
+     int xPosition;
+     int yPosition;
+
+     public Car(int x, int y) {
+
+         this.xPosition = x;
+         this.yPosition = y;
+
+     }
+
+
+}
+
+
 public class Problem {
     Scanner scan = new Scanner(System.in);
+
+    ArrayList<Car> freeCars = new ArrayList<Car>(1000);
+    PriorityQueue<Car> usedCars = new PriorityQueue<Car>();
 
     int R; //rows
     int C; //columns
@@ -50,3 +72,4 @@ public class Problem {
         readInput();
     }
 }
+
