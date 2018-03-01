@@ -90,7 +90,7 @@ public class Problem {
     int N; //number of rides
     int B; //Bonus
     int T; //number of steps
-    Car[] cars;
+    int currentT = 0;
 
     void readInput() {
         R = scan.nextInt();
@@ -123,17 +123,82 @@ public class Problem {
 
     void choosingRides() {
         for (Ride rides: ridesQueue) {
-            Car carUsed = null;
-            if(carUsed != null) {
+            Car carUsed = findClosestCarOPTIMIZED(rides);
+            if(carUsed == null) {
+                carUsed = findClosestCar(rides);
+                if(carUsed != null) {
+                    carUsed.xPosition = rides.endX;
+                    carUsed.yPosition = rides.endY;
+                    carUsed.rides.add(rides.id);
+                    freeCars.remove(carUsed);
+                    usedCars.add(carUsed);
+                }
+            } else {
                 carUsed.xPosition = rides.endX;
                 carUsed.yPosition = rides.endY;
                 carUsed.rides.add(rides.id);
+                freeCars.remove(carUsed);
+                usedCars.add(carUsed);
             }
+        }
+    }
+
+    int distance(int x1, int y1, int x2, int y2){
+        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+    }
+
+    Car findClosestCar(Ride r){
+        for (Car c : freeCars){
+            int distanceRadius = r.finish_time - r.time_needed - c.finishTime;
+            int dist = distance(c.xPosition, c.yPosition, r.startX, r.startY);
+            if (dist <= distanceRadius){
+                c.finishTime = Math.max(dist + c.finishTime, r.start_time) + r.time_needed;
+                return c;
+            }
+        }
+        return null;
+    }
+
+    Car findClosestCarOPTIMIZED(Ride r){
+        int j;
+        for (Car c : freeCars){
+            int distanceRadius = r.start_time - c.finishTime;
+            int dist = distance(c.xPosition, c.yPosition, r.startX, r.startY);
+            if (dist <= distanceRadius){
+                c.finishTime = r.start_time + r.time_needed;
+                return c;
+            }
+        }
+        return null;
+    }
+
+    void printAnswer() {
+        for (Car c : freeCars) {
+            int n = c.rides.size();
+            System.out.print(n + " ");
+            for (int i = 0; i < n; i++) {
+                System.out.print(c.rides.get(i) + " ");
+            }
+            System.out.println();
+        }
+        for (Car c : usedCars) {
+            int n = c.rides.size();
+            System.out.print(n + " ");
+            for (int i = 0; i < n; i++) {
+                System.out.print(c.rides.get(i) + " ");
+            }
+            System.out.println();
         }
     }
 
     void run() {
         readInput();
+        choosingRides();
+        printAnswer();
+    }
+
+    public static void main(String [ ] args) {
+        (new Problem()).run();
     }
 }
 
