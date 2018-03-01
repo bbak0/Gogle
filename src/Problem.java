@@ -12,12 +12,13 @@ import java.util.ArrayList;
     int start_time;
     int finish_time;
     int time_needed;
+    int id;
 
      public Integer getStartTime() {
          return start_time;
      }
 
-     public Ride(int sX, int sY, int eX, int eY, int start, int finish) {
+     public Ride(int sX, int sY, int eX, int eY, int start, int finish, int i) {
         this.startX = sX;
         this.startY = sY;
         this.endX = eX;
@@ -25,23 +26,23 @@ import java.util.ArrayList;
         this.start_time = start;
         this.finish_time = finish;
         time_needed = Math.abs(sX - eX) + Math.abs(sY - eY);
+        this.id = i;
 
     }
 
-}
+ }
 
 class Car {
 
      int finishTime;
      int xPosition;
      int yPosition;
-     int a;
+     ArrayList<Integer> rides = new ArrayList<>();
 
-     public Car(int x, int y) {
-
-         this.xPosition = x;
-         this.yPosition = y;
-
+     public Car() {
+         this.xPosition = 0;
+         this.yPosition = 0;
+         this.finishTime = 0;
      }
 
 
@@ -69,7 +70,7 @@ public class Problem {
     int N; //number of rides
     int B; //Bonus
     int T; //number of steps
-    int currentT = 0;
+    Car[] cars;
 
     void readInput() {
         R = scan.nextInt();
@@ -80,29 +81,24 @@ public class Problem {
         T = scan.nextInt();
         ridesQueue = new PriorityQueue<>(N, ride_comparator);
 
+        for (int i = 0; i < F; i++) {
+            freeCars.add(new Car());
+        }
+
         for (int i = 0; i < N; i++) {
-            ridesQueue.add(new Ride(scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt());
+            ridesQueue.add(new Ride(scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), i));
         }
     }
 
-    int distance(int x1, int y1, int x2, int y2){
-        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
-    }
-
-    Car findClosestCar(Ride r){
-         for (Car c : freeCars){
-            int distanceRadius = r.finish_time - r.time_needed - c.finishTime;
-            int dist = distance(c.xPosition, c.yPosition, r.startX, r.startY);
-            if (dist <= distanceRadius){
-                c.finishTime = distanceRadius + r.time_needed;
-                return c;
+    void choosingRides() {
+        for (Ride rides: ridesQueue) {
+            Car carUsed = null;
+            if(carUsed != null) {
+                carUsed.xPosition = rides.endX;
+                carUsed.yPosition = rides.endY;
+                carUsed.rides.add(rides.id);
             }
         }
-        return null;
-    }
-
-    void main_loop(){
-
     }
 
     void run() {
