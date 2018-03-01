@@ -70,6 +70,8 @@ public class Problem {
     int N; //number of rides
     int B; //Bonus
     int T; //number of steps
+    int currentT = 0;
+
     Car[] cars;
 
     void readInput() {
@@ -99,6 +101,26 @@ public class Problem {
                 carUsed.rides.add(rides.id);
             }
         }
+    }
+
+    int distance(int x1, int y1, int x2, int y2){
+        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+    }
+
+    Car findClosestCar(Ride r){
+         for (Car c : freeCars){
+            int distanceRadius = r.finish_time - r.time_needed - c.finishTime;
+            int dist = distance(c.xPosition, c.yPosition, r.startX, r.startY);
+            if (dist <= distanceRadius){
+                c.finishTime = distanceRadius + r.time_needed;
+                return c;
+            }
+        }
+        return null;
+    }
+
+    void main_loop(){
+
     }
 
     void run() {
