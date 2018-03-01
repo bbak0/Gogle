@@ -35,6 +35,7 @@ class Car {
      int finishTime;
      int xPosition;
      int yPosition;
+     int a;
 
      public Car(int x, int y) {
 
