@@ -1,3 +1,5 @@
+import java.util.Comparator;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
  class Ride {
@@ -9,7 +11,11 @@ import java.util.Scanner;
     int finish_time;
     int time_needed;
 
-    public Ride(int sX, int sY, int eX, int eY, int start, int finish) {
+     public Integer getStartTime() {
+         return start_time;
+     }
+
+     public Ride(int sX, int sY, int eX, int eY, int start, int finish) {
         this.startX = sX;
         this.startY = sY;
         this.endX = eX;
@@ -22,8 +28,17 @@ import java.util.Scanner;
 
 }
 
+class RideComparator implements Comparator<Ride> {
+
+     public int compare(Ride a, Ride b) {
+         return a.getStartTime().compareTo(b.getStartTime());
+    }
+}
+
 public class Problem {
     Scanner scan = new Scanner(System.in);
+    RideComparator ride_comparator = new RideComparator();
+    PriorityQueue<Ride> ridesQueue;
 
     int R; //rows
     int C; //columns
@@ -39,10 +54,10 @@ public class Problem {
         N = scan.nextInt();
         B = scan.nextInt();
         T = scan.nextInt();
-        Ride[] rides = new Ride[N];
+        ridesQueue = new PriorityQueue<>(N, ride_comparator);
 
         for (int i = 0; i < N; i++) {
-            rides[i] = new Ride(scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt());
+            ridesQueue.add(new Ride(scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt());
         }
     }
 
