@@ -143,17 +143,21 @@ public class Problem {
     }
 
     void placeFreeCars(int T) {
-        if (usedCars.peek().finishTime <= T) {
+        if (!usedCars.isEmpty()) {
+            while (usedCars.peek().finishTime <= T) {
                 freeCars.add(usedCars.poll());
-           }
-
-       }
+                if (usedCars.isEmpty()) {
+                    return;
+                }
+            }
+        }
+    }
 
 
     void choosingRides() {
         for (Ride rides: ridesQueue) {
             placeFreeCars(rides.start_time);
-            Car carUsed = findClosestCarOPTIMIZED(rides);
+            Car carUsed = findClosestCarOPTIMIZEDMORE(rides);
             if(carUsed == null) {
                 carUsed = findClosestCar(rides);
                 if(carUsed != null) {
@@ -191,12 +195,29 @@ public class Problem {
 
     Car findClosestCarOPTIMIZED(Ride r){
         for (Car c : freeCars){
-            int distanceRadius = r.start_time - c.finishTime;
+            int distanceRadius = r.start_time - c.finishTime - 1;
             int dist = distance(c.xPosition, c.yPosition, r.startX, r.startY);
             if (dist <= distanceRadius){
                 c.finishTime = r.start_time + r.time_needed;
                 return c;
             }
+        }
+        return null;
+    }
+
+    Car findClosestCarOPTIMIZEDMORE(Ride r){
+        PriorityQueue<CarDist> possibleCars = new PriorityQueue<CarDist>(1000, new CarDistComparator());
+        for (Car c : freeCars){
+            int distanceRadius = r.start_time - c.finishTime - 1;
+            int dist = distance(c.xPosition, c.yPosition, r.startX, r.startY);
+            if (dist <= distanceRadius){
+                possibleCars.add(new CarDist(dist, c));
+            }
+        }
+        if(!possibleCars.isEmpty()) {
+            Car car = possibleCars.poll().c;
+            car.finishTime = r.start_time + r.time_needed;
+            return car;
         }
         return null;
     }
