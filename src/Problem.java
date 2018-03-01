@@ -121,10 +121,6 @@ public class Problem {
         return null;
     }
 
-    void main_loop(){
-
-    }
-
     void run() {
         readInput();
     }
