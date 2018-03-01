@@ -39,9 +39,14 @@ public class Problem {
         N = scan.nextInt();
         B = scan.nextInt();
         T = scan.nextInt();
+        Ride[] rides = new Ride[N];
 
         for (int i = 0; i < N; i++) {
-
+            rides[i] = new Ride(scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt());
         }
+    }
+
+    void run() {
+        readInput();
     }
 }
