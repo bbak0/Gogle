@@ -94,8 +94,17 @@ public class Problem {
 
     void choosingRides() {
         for (Ride rides: ridesQueue) {
-            Car carUsed = findClosestCar(rides);
-            if(carUsed != null) {
+            Car carUsed = findClosestCarOPTIMIZED(rides);
+            if(carUsed == null) {
+                carUsed = findClosestCar(rides);
+                if(carUsed != null) {
+                    carUsed.xPosition = rides.endX;
+                    carUsed.yPosition = rides.endY;
+                    carUsed.rides.add(rides.id);
+                    freeCars.remove(carUsed);
+                    usedCars.add(carUsed);
+                }
+            } else {
                 carUsed.xPosition = rides.endX;
                 carUsed.yPosition = rides.endY;
                 carUsed.rides.add(rides.id);
@@ -110,11 +119,24 @@ public class Problem {
     }
 
     Car findClosestCar(Ride r){
-         for (Car c : freeCars){
+        for (Car c : freeCars){
             int distanceRadius = r.finish_time - r.time_needed - c.finishTime;
             int dist = distance(c.xPosition, c.yPosition, r.startX, r.startY);
             if (dist <= distanceRadius){
-                c.finishTime = distanceRadius + r.time_needed;
+                c.finishTime = Math.max(dist + c.finishTime, r.start_time) + r.time_needed;
+                return c;
+            }
+        }
+        return null;
+    }
+
+    Car findClosestCarOPTIMIZED(Ride r){
+        int j;
+        for (Car c : freeCars){
+            int distanceRadius = r.start_time - c.finishTime;
+            int dist = distance(c.xPosition, c.yPosition, r.startX, r.startY);
+            if (dist <= distanceRadius){
+                c.finishTime = r.start_time + r.time_needed;
                 return c;
             }
         }
