@@ -12,12 +12,13 @@ import java.util.ArrayList;
     int start_time;
     int finish_time;
     int time_needed;
+    int id;
 
      public Integer getStartTime() {
          return start_time;
      }
 
-     public Ride(int sX, int sY, int eX, int eY, int start, int finish) {
+     public Ride(int sX, int sY, int eX, int eY, int start, int finish, int i) {
         this.startX = sX;
         this.startY = sY;
         this.endX = eX;
@@ -25,17 +26,18 @@ import java.util.ArrayList;
         this.start_time = start;
         this.finish_time = finish;
         time_needed = Math.abs(sX - eX) + Math.abs(sY - eY);
+        this.id = i;
 
     }
 
-}
+ }
 
 class Car {
 
      int finishTime;
      int xPosition;
      int yPosition;
-     int a;
+     ArrayList<Integer> rides = new ArrayList<>();
 
      public Car(int x, int y) {
 
@@ -80,7 +82,17 @@ public class Problem {
         ridesQueue = new PriorityQueue<>(N, ride_comparator);
 
         for (int i = 0; i < N; i++) {
-            ridesQueue.add(new Ride(scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt());
+            ridesQueue.add(new Ride(scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), i));
+        }
+    }
+
+    void choosingRides() {
+        for (Ride rides: ridesQueue) {
+            Car carUsed = null;
+            carUsed.finishTime = rides.finish_time;
+            carUsed.xPosition = rides.endX;
+            carUsed.yPosition = rides.endY;
+            carUsed.rides.add(rides.id);
         }
     }
 
