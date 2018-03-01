@@ -23,4 +23,8 @@ public class Problem {
             rides[i] = new Ride(scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt());
         }
     }
+
+    void run() {
+        readInput();
+    }
 }
